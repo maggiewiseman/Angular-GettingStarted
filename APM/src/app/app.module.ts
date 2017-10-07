@@ -5,18 +5,20 @@ import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { ProductListComponent } from './products/product-list.component';
 import { ConvertToSpacePipe } from './shared/convertToSpaces.pipe';
+import { StarComponent } from './shared/star.component';
+import { ProductService } from './products/product.service'
 
 
 @NgModule({
   declarations: [
     AppComponent, ProductListComponent,
-    ConvertToSpacePipe
+    ConvertToSpacePipe, StarComponent
   ],
   imports: [
     BrowserModule,
     FormsModule
   ],
-  providers: [],
+  providers: [ProductService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
