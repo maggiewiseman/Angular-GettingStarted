@@ -10,9 +10,9 @@ import { ProductService } from './product.service'
 
 export class ProductListComponent implements OnInit {
     constructor(private _productService: ProductService) {
-        this.listFilter;
-    }
 
+    }
+    errorMessage: string;
     pageTitle: string = 'Product List';
     imageWidth: number = 50;
     imageMargin: number = 2;
@@ -28,7 +28,7 @@ export class ProductListComponent implements OnInit {
         this.filteredProducts = this.listFilter ? this.performFilter(this.listFilter) : this.products;
         console.log('filtered List: ', this.filteredProducts);
     }
-    filteredProducts: IProduct[];
+    filteredProducts: IProduct[] = [];
     products: IProduct[];
     performFilter(filterBy: string): IProduct[] {
         filterBy = filterBy.toLocaleLowerCase();
@@ -44,8 +44,12 @@ export class ProductListComponent implements OnInit {
         this.pageTitle = message;
     }
     ngOnInit(): void {
-        this.products = this._productService.getProducts();
-        this.filteredProducts = this.products;
+        this._productService.getProducts().subscribe(products => {
+            this.products = products;
+            this.filteredProducts = this.products;
+        },
+            error => this.errorMessage = <any>error);
+
 
     }
 }
